@@ -67,6 +67,11 @@ export const links = {
       url: "/app/admin/earnings",
       icon: DollarSign,
     },
+    {
+      title: "Profil",
+      url: "/app/admin/profile",
+      icon: User,
+    },
   ],
   superAdmin: [
     {
@@ -103,6 +108,11 @@ export const links = {
       title: "Daromadlar",
       url: "/app/admin/earnings",
       icon: DollarSign,
+    },
+    {
+      title: "Profil",
+      url: "/app/admin/profile",
+      icon: User,
     },
   ],
 };

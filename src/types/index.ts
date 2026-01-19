@@ -86,6 +86,13 @@ export interface Teacher {
   createdAt: string;
   updatedAt: string;
 }
+export interface TeacherQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  role?: AdminRole;
+  isActive?: boolean;
+}
 
 // Student types
 export interface Student {

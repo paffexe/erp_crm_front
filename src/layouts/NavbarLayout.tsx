@@ -2,7 +2,6 @@ import { ActiveLink } from "@/components/ui/active-link";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,

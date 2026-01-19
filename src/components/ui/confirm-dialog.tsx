@@ -27,7 +27,7 @@ export function ConfirmDialog({
     description,
     onConfirm,
     confirmText = "Tasdiqlash",
-    cancelText = "Bekor qilish",
+    cancelText = "Return back",
     variant = "destructive",
     isLoading = false,
 }: ConfirmDialogProps) {

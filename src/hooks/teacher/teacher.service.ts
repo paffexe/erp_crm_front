@@ -1,5 +1,5 @@
 import { request } from "@/config/request";
-import type { Teacher } from "@/types";
+import type { PaginatedResponse, Teacher, TeacherQueryParams } from "@/types";
 
 interface CreateTeacherDto {
   email: string;
@@ -18,14 +18,16 @@ interface CreateTeacherDto {
   experience?: string;
 }
 
-export const teacherService = {
-  getAll: async (): Promise<{ message: string; teachers: Teacher[] }> => {
-    const response = await request.get("/teacher");
+export const teacherMutation = {
+  getAll: async (
+    params?: TeacherQueryParams,
+  ): Promise<PaginatedResponse<Teacher>> => {
+    const response = await request.get("/teacher", { params });
     return response.data;
   },
 
   getById: async (
-    id: string
+    id: string,
   ): Promise<{ message: string; teacher: Teacher }> => {
     const response = await request.get(`/teacher/${id}`);
     return response.data;
@@ -53,7 +55,7 @@ export const teacherService = {
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
-      }
+      },
     );
     return response.data;
   },

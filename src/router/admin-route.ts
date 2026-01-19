@@ -5,7 +5,7 @@ const Lessons = lazy(() => import("@/pages/admins/lessons/Lessons"));
 const Payments = lazy(() => import("@/pages/admins/payments/Payments"));
 const Students = lazy(() => import("@/pages/admins/students/Students"));
 const Teachers = lazy(() => import("@/pages/admins/teachers/Teachers"));
-const Profile = lazy(() => import("@/pages/admins/Profile"));
+const Profile = lazy(() => import("@/pages/admins/profile/Profile"));
 
 export default [
   {
