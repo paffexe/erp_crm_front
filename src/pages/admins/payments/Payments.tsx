@@ -151,7 +151,7 @@ const Payments = () => {
         </div>
 
         <Select value={statusFilter} onValueChange={handleStatusChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-45">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>

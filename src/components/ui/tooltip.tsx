@@ -69,7 +69,7 @@ function TooltipContent({
     <div
       data-slot="tooltip-content"
       className={cn(
-        "absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-fit origin-[var(--radix-tooltip-content-transform-origin)] rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-50 w-fit origin-(--radix-tooltip-content-transform-origin) rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground shadow-md animate-in fade-in-0 zoom-in-95",
         className
       )}
       style={{ marginBottom: sideOffset }}
