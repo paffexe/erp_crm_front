@@ -721,7 +721,7 @@ const LessonCreationForm = () => {
               <CardDescription>Click to apply a template</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3 max-h-[600px] overflow-y-auto">
+              <div className="space-y-3 max-h-150 overflow-y-auto">
                 {templates.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <BookOpen size={40} className="mx-auto mb-3 opacity-50" />
