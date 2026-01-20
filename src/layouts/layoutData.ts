@@ -10,7 +10,6 @@ import {
   BookOpenCheck,
   CalendarDays,
   Banknote,
-  LogOut,
 } from "lucide-react";
 
 export const links = {

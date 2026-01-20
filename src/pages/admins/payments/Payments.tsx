@@ -29,7 +29,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Search, Eye, CheckCircle, XCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Search,
+  Eye,
+  CheckCircle,
+  XCircle,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import type { Transaction, TransactionStatus } from "@/types";
 import { Textarea } from "@/components/ui/textarea";
 import { useGetQuery } from "@/hooks/useQuery/useGetQuery";
@@ -72,7 +79,7 @@ const Payments = () => {
   // If you add a search parameter to your backend, you can add it here like:
   // if (search) queryParams.append("search", search);
 
-  const { data, isLoading, isError } = useGetQuery({
+  const { data, isLoading } = useGetQuery({
     pathname: `payments?${queryParams.toString()}`,
     url: `transactions?${queryParams.toString()}`,
   });

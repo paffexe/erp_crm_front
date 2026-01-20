@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -40,7 +40,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useGetQuery } from "@/hooks/useQuery/useGetQuery";
 
@@ -124,7 +123,7 @@ const LessonCreationForm = () => {
   const { user, isAuthenticated } = useAuth();
   const { mutate, isPending } = useCreateLesson();
 
-  const { data, isLoading, isError } = useGetQuery({
+  const { data } = useGetQuery({
     pathname: "schedules",
     url: `lesson-template/${user?.id}/teacher`,
   });
