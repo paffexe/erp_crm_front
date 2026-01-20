@@ -62,7 +62,7 @@ const Lessons = () => {
     queryParams.append("status", statusFilter);
   }
 
-  const { data, isLoading, isError } = useGetQuery({
+  const { data, isLoading } = useGetQuery({
     pathname: `lessons?${queryParams.toString()}`,
     url: `lesson?${queryParams.toString()}`,
   });

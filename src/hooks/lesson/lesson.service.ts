@@ -11,7 +11,7 @@ interface LessonsResponse {
   lessons: Lesson[];
 }
 
-export const lessonService = {
+export const lessonMutation = {
   getAll: async (page = 1, limit = 10): Promise<LessonsResponse> => {
     const response = await request.get("/lesson", { params: { page, limit } });
     return response.data;

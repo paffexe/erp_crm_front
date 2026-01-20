@@ -1,21 +1,20 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import type { Student } from "@/types";
 import { useStudents } from "@/hooks/student/useStudent";
 import { StudentsTable } from "./components/StudentsTable";
-import { StudentsPagination } from "./components/StudentsPagination";
 import { ViewStudentDialog } from "./components/ViewStudentDialog";
 import { BlockStudentDialog } from "./components/BlockStudentDialog";
 import { DeleteStudentDialog } from "./components/DeleteStudentDialog";
+import { PaginationControls } from "../admins/components/PaginationController";
 
 const Students = () => {
-  const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
   const [viewingStudent, setViewingStudent] = useState<Student | null>(null);
   const [blockingStudent, setBlockingStudent] = useState<Student | null>(null);
   const [deletingStudent, setDeletingStudent] = useState<Student | null>(null);
 
+  // Removed 'search' parameter
   const {
     students,
     meta,
@@ -23,7 +22,7 @@ const Students = () => {
     blockMutation,
     unblockMutation,
     deleteMutation,
-  } = useStudents({ page, search });
+  } = useStudents({ page, limit });
 
   const handleBlock = (id: string, reason: string) => {
     blockMutation.mutate(
@@ -44,63 +43,58 @@ const Students = () => {
     });
   };
 
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
+  const handleLimitChange = (newLimit: string) => {
+    setLimit(Number(newLimit));
     setPage(1);
   };
 
-  // console.log(students)
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
+      {/* HEADER: Meta on Left, Title on Right */}
+      <div className="flex flex-col-reverse sm:flex-row items-end sm:items-center justify-between gap-4">
+        {/* Left Side: Total Count Badge */}
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Students</h1>
-          <p className="text-foreground/60 text-sm">
+          {meta && (
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-border bg-muted/20 text-sm text-muted-foreground">
+              Total Students:
+              <span className="font-bold text-foreground">{meta.total}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Right Side: Title */}
+        <div className="text-right">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            Students
+          </h1>
+          <p className="text-muted-foreground mt-1 text-sm">
             Manage all students and their information
           </p>
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search
-            className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2"
-            style={{ color: "var(--brand-tertiary)" }}
-          />
-          <Input
-            placeholder="Search by name, phone or telegram..."
-            value={search}
-            onChange={(e) => handleSearchChange(e.target.value)}
-            className="pl-11 h-11 border-border focus:border-brand-primary"
-          />
-        </div>
-        {meta && (
-          <div className="text-sm text-foreground/60">
-            Total:{" "}
-            <span className="font-semibold text-foreground">{meta.total}</span>{" "}
-            students
-          </div>
-        )}
+      {/* Table Container */}
+      <div className="rounded-xl border border-border bg-card shadow-sm">
+        <StudentsTable
+          students={students}
+          isLoading={isLoading}
+          onView={setViewingStudent}
+          onBlock={setBlockingStudent}
+          onUnblock={handleUnblock}
+          onDelete={setDeletingStudent}
+        />
       </div>
 
-      {/* Table */}
-      <StudentsTable
-        students={students}
-        isLoading={isLoading}
-        onView={setViewingStudent}
-        onBlock={setBlockingStudent}
-        onUnblock={handleUnblock}
-        onDelete={setDeletingStudent}
-      />
-
       {/* Pagination */}
-      <StudentsPagination
+      <PaginationControls
         meta={meta}
-        currentPage={page}
-        onPageChange={setPage}
+        limit={limit}
+        onPageChange={handlePageChange}
+        onLimitChange={handleLimitChange}
       />
 
       {/* Dialogs */}

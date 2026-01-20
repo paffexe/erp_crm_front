@@ -4,23 +4,17 @@ import { studentMutation } from "./student.service";
 
 interface UseStudentsParams {
   page: number;
-  search: string;
+  search?: string;
   limit?: number;
 }
 
-export const useStudents = ({
-  page,
-  search,
-  limit = 10,
-}: UseStudentsParams) => {
+export const useStudents = ({ page, search, limit }: UseStudentsParams) => {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["students", page, search],
+    queryKey: ["students", page, search, limit],
     queryFn: () => studentMutation.getAll({ page, limit, search }),
   });
-
-  console.log(data);
 
   const blockMutation = useMutation({
     mutationFn: ({ id, reason }: { id: string; reason: string }) =>
@@ -57,7 +51,7 @@ export const useStudents = ({
   });
 
   return {
-    students: data?.students || [],
+    students: data?.data || [],
     meta: data?.meta,
     isLoading,
     blockMutation,

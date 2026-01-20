@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { teacherMutation } from "@/hooks/teacher/teacher.service";
 import { studentMutation } from "@/hooks/student/student.service";
-import { lessonService } from "@/services/lesson.service";
+import { lessonMutation } from "@/hooks/lesson/lesson.service";
 
 export const useStatistics = () => {
   const { data: teachersData, isLoading: teachersLoading } = useQuery({
     queryKey: ["teachers"],
-    queryFn: teacherMutation.getAll,
+    queryFn: () => teacherMutation.getAll(),
   });
 
   const { data: studentsData, isLoading: studentsLoading } = useQuery({
@@ -16,11 +16,11 @@ export const useStatistics = () => {
 
   const { data: lessonsData, isLoading: lessonsLoading } = useQuery({
     queryKey: ["lessons"],
-    queryFn: () => lessonService.getAll(),
+    queryFn: () => lessonMutation.getAll(),
   });
 
-  const teachers = teachersData?.teachers || [];
-  const students = studentsData?.students || [];
+  const teachers = teachersData?.data || [];
+  const students = studentsData?.data || [];
   const lessons = lessonsData?.data || [];
 
   const completedLessons = lessons.filter(

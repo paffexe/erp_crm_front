@@ -15,7 +15,7 @@ import { DeleteAdminDialog } from "./components/DeleteAdminDto";
 const Admins = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null);
   const [viewingAdmin, setViewingAdmin] = useState<Admin | null>(null);

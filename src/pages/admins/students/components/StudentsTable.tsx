@@ -33,13 +33,17 @@ export const StudentsTable = ({
     <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="bg-accent/50 hover:bg-accent/50">
-            <TableHead className="font-semibold">Name</TableHead>
-            <TableHead className="font-semibold">Phone</TableHead>
-            <TableHead className="font-semibold">Telegram</TableHead>
-            <TableHead className="font-semibold">Status</TableHead>
-            <TableHead className="font-semibold">Registered</TableHead>
-            <TableHead className="text-right font-semibold">Actions</TableHead>
+          <TableRow className="bg-brand-primary hover:bg-brand-primary/95 border-b-brand-primary/20">
+            <TableHead className="font-semibold text-white">Name</TableHead>
+            <TableHead className="font-semibold text-white">Phone</TableHead>
+            <TableHead className="font-semibold text-white">Telegram</TableHead>
+            <TableHead className="font-semibold text-white">Status</TableHead>
+            <TableHead className="font-semibold text-white">
+              Registered
+            </TableHead>
+            <TableHead className="text-right font-semibold text-white">
+              Actions
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
