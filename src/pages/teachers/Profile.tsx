@@ -1,7 +1,6 @@
 import { memo, useState } from "react";
 import { useUpdateTeacherProfile } from "./service/mutate/useUpdateTeacher";
 import { useAuth } from "@/hooks/useAuth";
-import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import Cookie from "js-cookie";
 
@@ -33,12 +32,12 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth();
-  const queryClient = useQueryClient();
 
-  const { data, isLoading } = useGetQuery({
+  const { data, isLoading, refetch } = useGetQuery({
     pathname: "profile",
     url: "auth/teacher/me",
   });
+
   console.log(data);
   Cookie.set("teacherName", data?.teacher.fullName || "");
 
@@ -101,7 +100,7 @@ const Profile = () => {
     setIsEdit(false);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!teacherId) {
       toast.error("User not identified");
       return;
@@ -168,8 +167,10 @@ const Profile = () => {
     };
 
     updateProfile(payload, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["teacher-profile"] });
+      onSuccess: async () => {
+        // Refetch the data to get fresh data from server
+        await refetch();
+
         toast.success("Profile updated successfully");
         setIsEdit(false);
       },
@@ -222,6 +223,18 @@ const Profile = () => {
         </div>
 
         <CardContent className="p-8 space-y-8">
+          {/* Show loading overlay when updating */}
+          {isUpdating && (
+            <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center rounded-lg">
+              <div className="flex flex-col items-center gap-3">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-brand-primary border-t-transparent"></div>
+                <p className="text-sm font-medium text-brand-primary">
+                  Updating profile...
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Stats Grid with Brand Colors */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-card border border-border rounded-xl p-5 text-center hover:shadow-md transition-shadow duration-200">
@@ -356,11 +369,22 @@ const Profile = () => {
                     <Input
                       type="number"
                       min="0"
-                      step="0.01"
+                      step="1"
                       value={form.hourPrice}
                       onChange={(e) =>
                         setForm({ ...form, hourPrice: e.target.value })
                       }
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "." ||
+                          e.key === "," ||
+                          e.key === "-" ||
+                          e.key === "e" ||
+                          e.key === "E"
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
                       className="h-11 rounded-lg border-border focus-visible:ring-brand-primary pl-7"
                     />
                   </div>
